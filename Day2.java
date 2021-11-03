@@ -36,20 +36,22 @@ public class Day2{
 		side3 = Integer.parseInt(equat.substring(indexX2 + 1));
 		int[] sides = {side1, side2, side3};
 		Arrays.sort(sides);
-		
+		int volume = side1 * side2 * side3;
+		int smallPeri = 2 * (sides[0] + sides[1]);
 		/*
-		System.out.println(factor1);
-		System.out.println(factor2);
-		System.out.println(factor3);
-		System.out.println(surfaceArea);
-		System.out.println(slack);
+		System.out.println(side1);
+		System.out.println(side2);
+		System.out.println(side3);
+		System.out.println(volume);
+		System.out.println(smallPeri);
 		*/
-		return 0;
+		return volume + smallPeri;
 
 	}
 
 	public static void main (String[] args){
  		int paperSum = 0;
+		int ribbonSum = 0;
 
 		try {
    			File myObj = new File("inputDay2.txt");
@@ -57,6 +59,7 @@ public class Day2{
                 	while (myReader.hasNextLine()) {	
                 		String data = myReader.nextLine();
                 		paperSum += wrapPaper(data);
+				ribbonSum += ribbon(data);
                		 }
                 myReader.close();
 		}
@@ -66,11 +69,16 @@ public class Day2{
                 }
 		
 		System.out.println(paperSum);
+		System.out.println(ribbonSum);
 		
 		/*
 		System.out.println(wrapPaper("2x3x4"));
 		System.out.println();
 		System.out.println(wrapPaper("1x1x10"));
+
+		System.out.println(ribbon("2x3x4"));
+		System.out.println();
+		System.out.println(ribbon("1x1x10"));
 		*/
        }
 }
