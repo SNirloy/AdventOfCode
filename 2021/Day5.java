@@ -67,32 +67,53 @@ public class Day5{
 				String[] end = coors[1].split(",");	
 				int starty = Integer.parseInt(start[1]);
 				int endy = Integer.parseInt(end[1]);
-				if (starty > endy){
-					int ending = starty;
-					starty = endy;
-					endy = ending;
-				}
 				int startx = Integer.parseInt(start[0]);
 				int endx = Integer.parseInt(end[0]);
-				if (startx > endx){
-					int ending = startx;
-					startx = endx;
-					endx = ending;
-				}
+
 				//Putting in the vents
 				if (startx == endx){
-					for (int i = starty; i <= endy; i++){
-						area[i][startx] ++;
+					if (starty > endy){
+						for (int i = endy; i <= starty; i++){
+							area[i][startx] ++;
+						}					
+					}else{
+						for (int i = starty; i <= endy; i++){
+							area[i][startx] ++;
+						}
 					}
 				}
 				else if (starty == endy){
-					for (int i = startx; i <= endx; i++){
-						area[starty][i] ++;
+					if (startx > endx){
+						for (int i = endx; i <= startx; i++){
+							area[starty][i] ++;
+						}					
+					}else{
+						for (int i = startx; i <= endx; i++){
+							area[starty][i] ++;
+						}
 					}
-				}
+				}	
 				else{
-					for (int i = 0; i <= (endx - startx); i++){
-						area[starty + i][startx + i] ++;
+					int diff = Math.abs(endx - startx);
+					if (startx > endx && starty>endy){
+						for (int i = 0; i <= diff; i++){
+							area[starty - i][startx - i]++;
+						}
+					}
+					else if (startx > endx && starty < endy){
+						for (int i = 0; i <= diff; i++){
+							area[starty + i][startx - i]++;
+						}
+					}
+					else if (startx < endx && starty > endy){
+						for (int i = 0; i <= diff; i++){
+							area[starty - i][startx + i]++;
+						}
+					}
+					else{
+						for (int i = 0; i <= diff; i++){
+							area[starty + i][startx + i]++;
+						}
 					}
 				}
 			}
@@ -102,14 +123,13 @@ public class Day5{
 		}
 		int dangerZones = 0;
 		for (int i = 0; i < area.length; i++){
-			// System.out.println(Arrays.toString(area[i]));
+			//System.out.println(Arrays.toString(area[i]));
 			for (int j = 0; j < area[i].length; j++){
 				if (area[i][j] > 1){
 					dangerZones++;
 				}
 			}
 		}
-
 		return dangerZones;
 	}
 
