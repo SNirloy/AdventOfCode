@@ -1,18 +1,18 @@
+#! python
 import hashlib
-
-stringDeci = "609043"
-stringHead = "abcdef"
-byting = (stringHead + stringDeci).encode()
-result = hashlib.md5(byting)
-stringRes = result.hexdigest()
-print(stringRes)
 
 deci = 1
 stringDeci = str(deci)
-stringHead = "abcdef"
+stringHead = "bgvyzdsv"
 byting = (stringHead + stringDeci).encode()
 result = hashlib.md5(byting)
 stringRes = result.hexdigest()
 
+while (stringRes[:6] != "000000"):
+	deci += 1
+	stringDeci = str(deci)
+	byting = (stringHead + stringDeci).encode()
+	result = hashlib.md5(byting)
+	stringRes = result.hexdigest()
 
-print(stringRes)
+print(str(deci))
