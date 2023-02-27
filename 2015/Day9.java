@@ -55,6 +55,15 @@ public class Day9{
 		}	
 		System.out.println(minDist);
 
+		int maxDist = 0;
+		for (int[] perm : perms){
+			int someDist = 0;
+			for (int i = 0; i < perm.length - 1; i ++){
+				someDist += distMat[perm[i]][perm[i+1]];
+			}
+			maxDist = Math.max(someDist, maxDist);
+		}
+		System.out.println(maxDist);
 	}
 
 	public static ArrayList<int[]> combinations (int[] choices, int[] holding, int index, ArrayList<int[]> ultracombo){
