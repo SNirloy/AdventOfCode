@@ -1,9 +1,10 @@
- import java.io.*;
+import java.io.*;
 import java.util.*;
+import java.lang.Thread;
 
 public class Day9{
 
-	public static void main (String[] args) throws IOException{
+	public static void main (String[] args) throws IOException, InterruptedException{
 		BufferedReader reading = new BufferedReader(new FileReader(new File("Day9.in")));
 		int len = 1;
 		String start = "";
@@ -38,47 +39,26 @@ public class Day9{
 		for (int i = 0; i < choices.length; i++){
 			choices[i] = i;
 		}
-	
-		System.out.println("Choices: " + Arrays.toString(choices));
-
-/*
-		ArrayList<int[]> singles = combinations(choices, new int[1], 0, new ArrayList<int[]>());
-
-		System.out.println("Combinations of 1");
-		for (int[] arr : singles){
-			System.out.println("\t" + Arrays.toString(arr));
-		}
+		
+		ArrayList<int[]> perms = permutations(new int[distMat.length], choices, 0, new ArrayList<int[]>());
+		System.out.println(perms.size());
 
 
-		ArrayList<int[]> pairs = combinations(choices, new int[2], 0, new ArrayList<int[]>());
-
-		System.out.println("Combinations of 2");
-		for (int[] arr : pairs){
-			System.out.println("\t" + Arrays.toString(arr));
-		}
-
-		ArrayList<int[]> triples = combinations(choices, new int[3], 0, new ArrayList<int[]>());
-
-		System.out.println("Combinations of 3");
-		for (int[] arr : triples){
-			System.out.println("\t" + Arrays.toString(arr));
-		}
-*/
+		int minDist = Integer.MAX_VALUE;
+		for (int[] perm : perms){
+			int someDist = 0;
+			for (int i = 0; i < perm.length - 1; i ++){
+				someDist += distMat[perm[i]][perm[i+1]];
+			}
+			// System.out.println("Some Dist: " + someDist);
+			minDist = Math.min(someDist, minDist);
+		}	
+		System.out.println(minDist);
 
 	}
 
 	public static ArrayList<int[]> combinations (int[] choices, int[] holding, int index, ArrayList<int[]> ultracombo){
 		for (int i = 0; i < choices.length; i++){
-
-	/*
-			System.out.println("i to index: " + i + ", " + index);
-			System.out.println("Choices: " + Arrays.toString(choices));
-			System.out.println("Holding: " + Arrays.toString(holding));
-			System.out.println("Combos: ");
-			for (int[] arr: ultracombo){System.out.println("\t" + Arrays.toString(arr));}
-			System.out.println();
-
-	*/
 			holding[index] = choices[i];
 			if (index == holding.length - 1){
 				int[] copy = new int[holding.length];
@@ -96,5 +76,27 @@ public class Day9{
 			}
 		}
 		return ultracombo;
+	}
+
+	public static ArrayList<int[]> permutations (int[] working, int[] source, int index, ArrayList<int[]> store){
+		for (int i = 0; i < source.length; i++){
+			working[index] = source[i];
+			int[] newSource = new int[source.length - 1];
+			if (newSource.length == 0){
+				int[] copy = new int[working.length];
+				for (int k = 0; k < copy.length; k++){
+					copy[k] = working[k];
+				}
+				store.add(copy);
+			}
+			else{
+				for (int j = 0; j < source.length; j++){
+					if (j < i){newSource[j] = source[j];}
+					if (j > i){newSource[j - 1] = source[j];}
+				}
+				permutations(working, newSource, index + 1, store);
+			}
+		}
+		return store;
 	}
 }
