@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Day12{
 	public static void main(String[] args) throws IOException{
-		BufferedReader reading = new BufferedReader(new FileReader( new File( "Day12.in")));
+		BufferedReader reading = new BufferedReader(new FileReader( new File( "Day12.json")));
 		long sum = 0;
 		while (reading.ready()){
 			String line = reading.readLine();
